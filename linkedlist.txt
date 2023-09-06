@@ -1,0 +1,183 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int info;
+    struct node *ptr;
+};
+typedef struct node node;
+node *head = NULL, *tail=NULL, *temp;
+node * createNode()
+{
+    temp=(node *)malloc(sizeof(node));
+    if(temp==NULL)
+    {
+        printf("node is created");
+    }
+    printf("enter a number");
+    scanf("%d",&temp->info);
+    temp->ptr=NULL;
+    return temp;
+}
+int main()
+{
+    int ch,pos;
+    while(1)
+    {
+        printf("\nenter 1 for addfirst\n2 for addlast\n3 for deletefirst\n4 for deletelast\n5 for listSize\n6 for insert\n7 for delete\n8 for display\n 9 for exit");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1: addfirst();break;
+            case 2: addlast();break;
+            case 3: deletefirst();break;
+            case 4: deletelast();break;
+            case 5: listSize();break;
+            case 6: 
+            printf("enter pos");
+            scanf("%d",&pos);
+            insert(pos);break;
+            case 7: delete(pos);
+            printf("enter pos");
+            scanf("%d",&pos);
+            break;
+           // printf("enter pos");
+            case 8: display();break;
+            case 9: exit(10);
+        }
+    }
+    return 0;
+}
+addfirst()
+{
+    node* t;
+    t=createNode();
+    if(head==NULL)
+    {
+        head=t;
+        tail=t;
+    }
+    else
+    {
+        t->ptr=head;
+        head=t;
+    }
+}
+addlast()
+{
+    node *t;
+    if(head==NULL)
+    {
+        head=createNode();
+        tail=head;
+    }
+    t=createNode();
+    tail->ptr=t;
+    tail=t;
+}
+deletefirst()
+{
+    if(head==NULL)
+    {
+        printf("list is empty");
+        return;
+    }
+    if(head==tail)
+    head=tail=NULL; 
+    else
+    head=head->ptr;
+}
+deletelast()
+{
+    node * th, * prev;
+    if(head==NULL||tail==NULL)
+    {
+        printf("list is empty");
+        return;
+    }
+    if(head==tail)
+    head=tail=NULL; 
+    else
+    th=head;
+    while(th->ptr!=NULL)
+    {
+        prev=th;
+        th=th->ptr;
+    }
+    prev->ptr=NULL;
+    tail=prev;
+}
+display()
+{
+    temp=head;
+    printf("%u",temp);
+    while(temp!=NULL)
+    {
+        printf("->%d-%u",temp->info,temp->ptr);
+        temp=temp->ptr;
+    }
+}
+int listSize()
+{
+    int count=0;
+    node * th;
+    th=head;
+    while(th!=NULL)
+    {
+        count++;
+        th=th->ptr;
+    }
+    //printf("%d",count);
+    return count;
+}
+insert(int pos)
+{
+    int count;
+    node * th,*t;
+    count=listSize();
+    if(pos<0)
+    {
+        addfirst();
+        return;
+    }
+    else if(pos>count)
+    {
+        addlast();
+        return;
+    }
+    else
+    {
+        t=createNode();
+        th=head;
+        while(pos>1)
+        {
+            th=th->ptr;
+            pos--;
+        }
+        t->ptr=th->ptr;
+        th->ptr=t;
+    }
+}
+delete(int pos)
+{
+    int size=listSize();
+    if(head==NULL||tail==NULL)
+    {
+        printf("list is empty");
+    }
+    else if(pos<=0)
+    {
+        deletefirst();
+    }else if(pos>=size){
+    deletelast();
+    }
+    
+}
