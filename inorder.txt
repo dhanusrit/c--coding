@@ -1,0 +1,48 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+  GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+  C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, COBOL, HTML, CSS, JS
+  Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include<stdio.h>
+struct node{
+    struct node *lptr;
+    char info;
+    struct node *rptr;
+};
+typedef struct node node;
+node *root=NULL,*temp;
+
+node *createNode(){
+    temp=(node *)malloc(sizeof(node));
+    if(temp==NULL){
+        printf("node not created");
+        return;
+    }
+    printf("enter data:");
+    scanf(" %c",&temp->info);
+    temp->lptr=NULL;
+    temp->rptr=NULL;
+    return temp;
+}
+inorder(node *root){
+    if(root==NULL){
+        return;
+       
+    }
+    inorder(root->lptr);
+    printf("%c",root->info);
+    inorder(root->rptr);
+}
+main(){
+    root=createNode();
+    node *A;
+    A=createNode();
+    node *B;
+    B=createNode();
+    root->lptr=A;
+    root->rptr=B;
+    inorder(root);
+}
