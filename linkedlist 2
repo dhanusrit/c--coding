@@ -1,0 +1,78 @@
+#include<stdio.h>
+struct node{
+    struct node *lptr;
+    int info;
+    struct node *rptr;
+};
+typedef struct node node;
+node *root=NULL,*temp;
+
+node *createNode(){
+    temp=(node *)malloc(sizeof(node));
+    if(temp==NULL){
+        printf("node not created ");
+        return;
+    }
+    printf("enter data: ");
+    scanf(" %d",&temp->info);
+    temp->lptr=NULL;
+    temp->rptr=NULL;
+    return temp;
+}
+preorder(node *root){
+    if(root==NULL){
+        return;
+       
+    }
+ 
+    printf("%d",root->info);
+    preorder(root->lptr);
+    preorder(root->rptr);
+}
+main(){
+    int x;
+    int y;
+    int z;
+    root=createNode();
+    node *A;
+    A=createNode();
+    node *B;
+    B=createNode();
+    root->lptr=A;
+    root->rptr=B;
+    preorder(root);
+    x=NN(root);
+    printf("no of nodes are %d\n",x);
+    y=NNL(root);
+    printf("no of non leaf nodes are %d\n",y);
+    z=NL(root);
+    printf("no of leaf nodes %d",z);
+}
+NN(node *root){
+    if(root==NULL){
+        return 0;
+    }
+    int lp=NN(root->lptr);
+    int rp=NN(root->rptr);
+    return 1+lp+rp;
+}
+NNL(node *root){
+    if(root==NULL){
+        return 0;
+    }else if(root->lptr==NULL && root->rptr==NULL){
+        return 0;
+    }
+    int lpp=NNL(root->lptr);
+    int rpp=NNL(root->rptr);
+    return 1+lpp+rpp;
+}
+NL(node *root){
+    if(root==NULL){
+        return 0;
+    }else if(root->lptr==NULL && root->rptr==NULL){
+        return 1;
+    }
+    int lpp=NL(root->lptr);
+    int rpp=NL(root->rptr);
+    return lpp+rpp;
+}
